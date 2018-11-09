@@ -10,8 +10,19 @@
             </v-flex>
            </v-layout>
        </v-container>
+       <v-layout>
+           <v-flex xs12 text-xs-center>
+               <v-progress-circular 
+               indeterminate 
+               class="primary--text"
+               :width="7"
+               :size="70"
+               v-if="loading"
+               ></v-progress-circular>
+           </v-flex>
+       </v-layout>
      <div row wrap class="posts">
-         <v-layout row wrap>
+         <v-layout row wrap v-if="!loading">
              <v-flex xs12 sm6 offset-sm3 >
                  <v-card  v-for="post in posted" 
                     :src="post.imageUrl"
@@ -54,11 +65,14 @@
     </div> 
 </template>
 
-<script>
+<script> 
 export default {
     computed: {
         posted(){
             return this.$store.getters.featuredPosts
+        },
+        loading() {
+           return this.$store.getters.loading
         }
     }
 }

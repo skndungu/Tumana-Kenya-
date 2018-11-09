@@ -49,6 +49,9 @@ export const store = new Vuex.Store({
          error: null
     },
     mutations:{
+        setLoadedRequests(state, payload){
+            state.loadedPosts = payload
+        },
         createPost(state, payload) {
             state.loadedPosts.push(payload)
         },
@@ -66,7 +69,36 @@ export const store = new Vuex.Store({
         }
     },
     actions:{
-        createPost ({commit}, payload) {
+        loadRequests({commit}){
+            commit('setLoading', true)
+            firebase.database().ref('Requests').once('value')
+            .then((data) => {
+               const Requests= []// where to store all the loaded data
+               const obj = data.val()
+                for(let key in obj){
+                    Requests.push({
+                        id: key,
+                        title: obj[key].title,
+                        date: obj[key].date,
+                        description: obj[key].description,
+                        destination: obj[key].destination,
+                        first_name: obj[key].first_name,
+                        imageUrl: obj[key].imageUrl,
+                        last_name: obj[key].last_name,
+                        phone_no: obj[key].phone_no,
+                        time: obj[key].time,
+                        your_location: obj[key].your_location,
+                    
+                    })
+                }
+                commit('setLoadedRequests', Requests)
+                commit('setLoading', false)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        createPost ({commit, getters}, payload) {
             const post_request= {
                 first_name: payload.first_name,
                 last_name: payload.last_name,
@@ -77,12 +109,17 @@ export const store = new Vuex.Store({
                 destination: payload.destination,
                 imageUrl: payload.imageUrl,
                 date: payload.date,
-                time: payload.time
+                time: payload.time,
+           
             }
             // // Reach out to firebase and store it
             firebase.database().ref('Requests').push(post_request).then((data) => {
-                console.log(data)
-                commit('createPost', post_request)
+                // console.log(data)
+                const key = data.key
+                commit('createPost',{
+                    ...post_request,
+                    id: key
+                })
             })
             .catch((error) => {
                 console.log(error)
@@ -132,6 +169,13 @@ export const store = new Vuex.Store({
                     console.log(error)
                 }
             )
+        },
+        autoSignIn({commit}, payload) {
+           commit('setUser', {id: payload.uid, requestsPosted:[]})
+        },
+        logout({commit}){
+            firebase.auth().signOut()
+            commit('setUser', null)
         },
         clearError({commit}) {
             commit('clearError')

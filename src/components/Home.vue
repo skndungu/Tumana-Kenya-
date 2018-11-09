@@ -6,8 +6,22 @@
           <h1 id="logo">Tumana <span id="sublogo"> | Kenya</span>
           </h1> 
             <ul class="service-items">
-            <v-list-tile id="service-item" v-for="item in menuItems" :key="item.title" router :to="item.link"><v-icon dark right >{{item.icon}}</v-icon>{{item.title}}</v-list-tile>
-      
+            <v-list-tile id="service-item" 
+            v-for="item in menuItems" 
+            :key="item.title" router :to="item.link">
+            <v-icon dark right >
+              {{item.icon}}
+              </v-icon>
+              {{item.title}}
+              </v-list-tile>
+            <v-list-tile
+             v-if="userIsAuthenticated" 
+             id="service-item"
+             @click="onLogout"
+            >
+                <v-icon dark right>exit_to_app</v-icon>
+                <v-list-tile-action>Logout</v-list-tile-action>
+              </v-list-tile>
              </ul>
                <div class="side-wrapper">
           <ul id="side-wrapper-item">
@@ -39,7 +53,7 @@
     <div class="request-service">
      <div id="consultation">Wise courier for wise business <br> Awaiting your call for pick up?</div>  
         <div class="service-categories">
-            <v-btn large router to="/areas-of-service" class="info">Areas of Service</v-btn>
+            <v-btn large router to="/services" class="info">Services offered</v-btn>
             <v-btn large router to="/post-request" class="info">Post Request</v-btn>
             <v-btn large router to="/previous-clients/:client_id" class="info">Previous Clients</v-btn>
             <v-btn large router to="/posted-requests" class="info">Admin</v-btn>
@@ -62,7 +76,7 @@ export default {
   computed: {
     menuItems() {
       let menuItems = [
-        {icon: 'face', title: 'SignIn', link: '/signin'},
+        {icon: 'face', title: 'Sign In', link: '/signin'},
         {icon: 'lock_open', title: 'Sign up', link: '/signup'},
       ]
       if (this.userIsAuthenticated){
@@ -77,6 +91,11 @@ export default {
     },
     userIsAuthenticated() {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  },
+  methods: {
+    onLogout(){
+      this.$store.dispatch('logout')
     }
   }
 }

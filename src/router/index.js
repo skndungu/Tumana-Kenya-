@@ -8,7 +8,7 @@ import Signin from '@/components/User/Signin'
 import AreaOfService from '@/components/Requests/AreaOfService'
 import PostedRequests from '@/components/Requests/PostedRequests'
 import PostedRequest from '@/components/Requests/PostedRequest'
-
+import AuthGuard from './auth-guard'
 
 
 Vue.use(Router)
@@ -23,7 +23,8 @@ export default new Router({
     {
       path: '/post-request',
       name: 'PostRequests',
-      component: PostRequests
+      component: PostRequests,
+      beforeEnter: AuthGuard
     },
     {
       path: '/previous-clients/:client_id',
@@ -41,7 +42,7 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/areas-of-service',
+      path: '/services',
       name: 'AreaOfService',
       component: AreaOfService
     },

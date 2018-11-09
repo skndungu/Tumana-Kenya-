@@ -136,7 +136,8 @@ export default {
       description: '',
       imageUrl: '',
       date: '',
-      time: ''  
+      time: '',
+
     }
   }, 
   computed: {
@@ -178,7 +179,8 @@ export default {
                 destination: this.destination,
                 imageUrl: this.imageUrl,
                 date: this.date,
-                time: this.time
+                time: this.time,
+
       }
       this.$store.dispatch('createPost', requestsData)
     }
