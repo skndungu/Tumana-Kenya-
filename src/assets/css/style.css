@@ -1,0 +1,272 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i");
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+@font-face{
+    font-family: Tesla;
+    src: url(fonts/TESLA.ttf);
+}
+
+@font-face{
+    font-family: Gotham Meduim;
+    src: url(fonts/Gotham\ Medium\ Regular.ttf);
+}
+
+/* .home img{
+    position: absolute;
+    top: 0;
+} */
+.home{
+    background-image: url('../img/consultations8.jpeg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position:center;
+    height: 100vh;
+}
+
+#logo{
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: #3426ae;
+    text-transform: uppercase;
+    font-family: Tesla;
+    font-weight: 700;
+    z-index: 1;
+    cursor: pointer;
+
+}
+#sublogo{
+    color: #ffff;
+}
+
+.menu-btn{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.btn-line{
+    width: 30px;
+    height: 4px;
+    margin: 0 0 5px 0;
+    background: #3426ae;
+    border-radius: 1px;
+    transition: all 1s ease-out; 
+    z-index: 1;
+}
+
+.side-wrapper{
+    background: #ffff; 
+    /* opacity:0.8; */
+    width: 18vw;  
+    height: 100vh;
+    float: right;
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center; 
+    transform: translateX(100%);
+    transition: transform 700ms;
+    /* display: none; */
+}
+
+#side-wrapper-item li{
+   text-align: center;
+   cursor: pointer;
+   text-transform: uppercase;
+   font-weight: 600;
+   font-family:  Helvetica, sans-serif;
+   margin-top: 50px;
+   list-style: none;
+}
+
+#side-wrapper-item li a:hover{
+    color: #3426ae;
+ }
+
+.btn-close{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all 1s ease-in; 
+    display:none;
+}
+
+.btn-line-close{
+    width: 30px;
+    height: 4px;
+    margin: 0 0 5px 0;
+    background: black;
+    border-radius: 1px;
+    transition: all 1s ease-in; 
+    z-index: 1;  
+
+}
+
+.close-btn.activate {
+    transform: rotate(180deg); 
+}
+.btn-close.activate .btn-line-close:nth-child(1){
+    transform: rotate(45deg) translate(5px, 5px); 
+} 
+
+.btn-close.activate .btn-line-close:nth-child(2){
+    opacity: 0;
+}
+
+.btn-close.activate .btn-line-close:nth-child(3){
+    transform: rotate(-45deg) translate(8px, -7px); 
+}
+
+
+
+
+
+.menu-btn.activate {
+    transform: rotate(180deg); 
+}
+.menu-btn.activate .btn-line:nth-child(1){
+    transform: rotate(45deg) translate(5px, 5px); 
+} 
+
+.menu-btn.activate .btn-line:nth-child(2){
+    opacity: 0;
+}
+
+.menu-btn.activate .btn-line:nth-child(3){
+    transform: rotate(-45deg) translate(8px, -7px); 
+}
+
+.close{
+    display: none;
+}
+
+.open{
+    display: block;
+    transform: translateX(0);
+   
+}
+
+.show-cross {
+    display: block;
+}
+
+
+/* SERVICE ITEMS */
+.service-items{
+    text-transform: uppercase;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+}
+
+#service-item{
+    margin-top: 10px;
+    color: #ffff;
+    padding: 10px;
+    margin-right: 10px;
+    font-weight: 660;
+    font-size: 16pt;
+}
+
+#service-item li{
+list-style: none;
+}
+
+#service-item:hover{
+ color: #3426ae;
+ cursor: pointer;
+}
+
+.request-service{
+    text-align:center;
+    text-transform: uppercase;
+    color: black;
+    font-size: 16pt;
+    font-family: Gotham Meduim;
+    font-weight: 500;
+}
+
+#consultation{
+    margin-top: 150px;
+    margin-bottom: 150px;
+    font-family: Gotham Meduim;
+    font-size: 36pt;
+    color: white;
+}
+
+.category-items{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.category-items li{ 
+  margin-right: 10px;
+  background: #000;
+  opacity: 0.8;
+  border: solid #ffff 2px;
+  color: #ffff;
+  padding: 7px;
+  border-radius: 8px;
+
+}
+
+.category-items li:hover{ 
+    background: transparent;
+    color: black;
+    cursor: pointer;
+    transition: 1.5s;
+    border: solid #000 2px;
+  }
+
+  .investments{
+    background-image: url('../img/consultaions4.jpg');
+    height: 400px;
+}
+
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media(max-width: 1024px){
+    .service-items{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    #service-item:nth-child(1){
+        margin-top: 70px;
+
+    }
+}
+
+@media(max-width: 768px){
+    .category-items{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .category-items li{ 
+        margin-bottom: 15px;
+      
+      }
+      .service-items{
+        display: none;
+    }
+
+    .home{
+        background-image: url('../img/consultations8.jpeg');
+        position:fixed;
+        height: 100vh;
+        width: 100%;
+    }
+
+}
