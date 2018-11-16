@@ -1,39 +1,20 @@
 <template>
 <v-layout row>
   <v-layout>
-  <v-flex xs12 sm6 offset-sm3 class="text-xs-center mt-2">
-    <h2 class="primary--text">Tumana Kenya Services</h2>
-    <v-btn class="info" id="service1">
-      Get Security Guards
-    </v-btn>
-      <br>
-    <v-btn class="info success" id="service1">
-      Get Tender Quotations
-    </v-btn>  
-      <br>
-    <v-btn class="info" id="service1">
-     Have Market Research Done
-    </v-btn>  
-      <br>
-    <v-btn class="info" id="service1">
-     Goods Delivery
-    </v-btn>  
-      <br>
-    <v-btn class="info" id="service1">
-      Meeting representation
-    </v-btn>  
-      <br>
-    <v-btn class="info" id="service1">
-     Transport
-    </v-btn>  
-      <br>
-    <v-btn class="info" id="service1">
-     Branding Services
-    </v-btn>  
-    <br>
-    <v-btn class="info" id="service1">
-    Rent Services
-    </v-btn>  
+  <v-flex xs12 sm6 offset-sm3 >
+    <app-tender-dialog></app-tender-dialog>
+    <app-helb-dialog></app-helb-dialog>
+    <app-kra-dialog></app-kra-dialog>
+    <app-garage-dialog></app-garage-dialog>
+    <app-meeting-dialog></app-meeting-dialog>
+    <app-market-dialog></app-market-dialog>
+    <app-dawa-dialog></app-dawa-dialog>
+    <app-branding-dialog></app-branding-dialog>
+    <app-gifts-dialog></app-gifts-dialog>
+    <app-eulogy-dialog></app-eulogy-dialog>
+    <app-delivery-dialog></app-delivery-dialog>
+    <app-stationery-dialog></app-stationery-dialog>
+    <app-application-dialog></app-application-dialog>
   </v-flex>
   </v-layout>
 </v-layout>
@@ -47,12 +28,53 @@
 export default {
   data(){
     return{
-
+      services: [
+        {
+          title: ' Transport',
+           modal: ''
+        },
+        {
+          title: ' Get you job application Doccuments Delivered',
+           modal: ''
+        },
+        {
+          title: ' Tumana for baby items',
+           modal: ''
+        },
+        {
+          title: 'Tumana for technicain Services',
+           modal: ''
+        },
+        {
+          title: 'Get best tour companies <br> budget',
+           modal: ''
+        },
+        {
+          title: 'Tumana Birthday, Wedding and Graduation cakes',
+           modal: ''
+        },   
+        {
+          title: 'Get Agricultural Seervices',
+           modal: ''
+        },  
+      ],
+      showModal: false
     }
   },
   methods: {
-
+    
   }
 }
 </script>
+
+<style scoped>
+#service1{
+    /* display: flex;
+    flex-flow: row;
+    justify-items: center; */
+}
+.v-btn__content{
+  
+}
+</style>
 

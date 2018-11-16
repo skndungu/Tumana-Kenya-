@@ -45,15 +45,44 @@ export const store = new Vuex.Store({
         }
         ],
          user: null,
+         requestsPosted: [],
+         userId: [],
          loading: false,
          error: null
     },
     mutations:{
+        markPostDelivered(state, payload){
+            const id = payload.id
+            if(state.user.requestsPosted.findIndex(post => post.id === id) >= 0){
+                return
+            }
+            state.user.requestsPosted.push(id)
+            state.user.fbKeys[id] = payload.fbKey
+        },
+        markPostUndelivered(state, payload){
+            const requestsPosted = state.user.requestsPosted
+            requestsPosted.splice(requestsPosted.findIndex(post => post.id === payload), 1)
+            Reflect.deleteProperty(state.user.fbkeys, payload)
+        },
         setLoadedRequests(state, payload){
             state.loadedPosts = payload
         },
         createPost(state, payload) {
             state.loadedPosts.push(payload)
+        },
+        updatePost(state, payload){
+           const post = state.loadedPosts.find(post => {
+               return post.id === payload.id
+           })
+           if(payload.title){
+               post.title = payload.title
+           }
+           if(payload.description){
+               post.description = payload.description
+           }
+           if(payload.date){
+               post.date = payload.date
+           }
         },
         setUser(state, payload){
             state.user = payload
@@ -68,7 +97,39 @@ export const store = new Vuex.Store({
             state.error = null
         }
     },
-    actions:{
+    actions:{ 
+        markPostDelivered ({commit, getters}, payload) {
+            commit('setLoading', true)
+            const user = getters.user
+            firebase.database().ref('/users/' + user.id).child('/requests/')
+            .push(payload)
+            .then(data => {
+                commit('setLoading', false)
+                commit('markPostDelivered', {id: payload, fbKey: data.key})
+             })
+             .catch(error => {
+                 console.log(error)
+                 commit('setLoading', false)
+             })
+        },
+        markPostUndelivered ({commit, getters}, payload) {
+            commit('setLoading', true)
+            const user = getters.user
+            if(!user.fbKeys){
+                return
+            }
+            const fbKey = user.fbKeys[payload]
+            firebase.database().ref('/users/' + user.id + '/requests/').child(fbKey)
+            .remove()
+            .then(() => {
+                commit('setLoading', false)
+                commit('markPostUndelivered', payload)
+            })
+            .catch(error => {
+                console.log(error)
+                commit('setLoading', false)
+            })
+        },
         loadRequests({commit}){
             commit('setLoading', true)
             firebase.database().ref('Requests').once('value')
@@ -88,7 +149,7 @@ export const store = new Vuex.Store({
                         phone_no: obj[key].phone_no,
                         time: obj[key].time,
                         your_location: obj[key].your_location,
-                    
+                        creatorId: obj[key].creatorId
                     })
                 }
                 commit('setLoadedRequests', Requests)
@@ -107,17 +168,40 @@ export const store = new Vuex.Store({
                 description: payload.description,
                 your_location:payload.your_location,
                 destination: payload.destination,
-                imageUrl: payload.imageUrl,
                 date: payload.date,
                 time: payload.time,
-           
+                creatorId: getters.user.id
             }
             // // Reach out to firebase and store it
-            firebase.database().ref('Requests').push(post_request).then((data) => {
+            let imageUrl
+            let key
+            firebase.database().ref('Requests').push(post_request)
+            .then((data) => {
                 // console.log(data)
-                const key = data.key
+               key = data.key
+                // commit('createPost',{
+                //     ...post_request,
+                //     id: key
+                // })
+
+                return key
+            })
+            .then(key => {
+               const filename = payload.image.name
+               const ext = filename.slice(filename.lastIndexOf('.'))
+               return firebase.storage().ref('Requests/' + key + '.' + ext).put(payload.image)
+            })
+            .then(fileData => {
+                return fileData.ref.getDownloadURL()
+                .then(downloadUrl => {
+                    imageUrl = downloadUrl
+                    return firebase.database().ref('Requests').child(key).update({imageUrl: imageUrl})
+                })
+            })
+            .then(() => {
                 commit('createPost',{
                     ...post_request,
+                    imageUrl: imageUrl,
                     id: key
                 })
             })
@@ -126,16 +210,39 @@ export const store = new Vuex.Store({
             })
             // commit('createPost', post_request)
         },
+        updatePostsData({commit}, payload){
+            commit('setLoading', true)
+            const updateObj = {}
+            if(payload.title){
+                updateObj.title = payload.title
+            }
+            if(payload.description){
+                updateObj.description = payload.description
+            }
+            if(payload.data){
+                updateObj.date = payload.date
+            }
+            firebase.database().ref('Requests').child(payload.id).update(updateObj)
+            .then(() => {
+                commit('setLoading', false)
+                commit('updatePost', payload)
+            })
+            .then(error => {
+                console.log(error)
+                commit('setLoading', false)
+            })
+        },
         signUserUp({commit}, payload){
             commit('setLoading', true)
             commit('clearError')
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
             .then(
                 user => {
-                    commit('setLoading', false)
+                    commit('setLoading', true)
                     const newUser = {
                         id: user.uid,
-                        postedRequests: []
+                        requestsPosted: [],
+                        fbKeys: {}
                     }
                     commit('setUser', newUser)
                 }
@@ -157,7 +264,8 @@ export const store = new Vuex.Store({
                     commit('setLoading', false)
                     const newUser = {
                         id: user.uid,
-                        postedRequests: []
+                        requestsPosted: [],
+                        fbKeys: {}
                     }
                     commit('setUser', newUser)
                 }
@@ -171,7 +279,38 @@ export const store = new Vuex.Store({
             )
         },
         autoSignIn({commit}, payload) {
-           commit('setUser', {id: payload.uid, requestsPosted:[]})
+           commit('setUser', {
+               id: payload.uid,
+                requestsPosted:[],
+                fbKeys: {}
+            })
+        },
+        fetchUserData({commit, getters}){
+            commit('setLoading', true)
+            firebase.database().ref('/users/' + getters.user.id + '/requests/').once('value')
+            .then(data => {
+                const dataPairs =  data.val()
+                let requestsPosted = []
+                let SwappedPairs = {}
+                // console.log(dataPairs)
+                for(let key in dataPairs){
+                    requestsPosted.push(dataPairs[key])
+                    SwappedPairs[dataPairs[key]] = key
+                    // console.log(SwappedPairs)
+                }
+                const updatedUser = {
+                    id: getters.user.id,
+                    requestsPosted: requestsPosted,
+                    fbKeys: SwappedPairs
+                }
+                commit('setLoading', false)
+                commit('setUser', updatedUser)
+
+            })
+            .catch(error => {
+                console.log(error)
+                commit('setLoading', false)
+            })
         },
         logout({commit}){
             firebase.auth().signOut()
@@ -188,7 +327,7 @@ export const store = new Vuex.Store({
             })
         },
         featuredPosts(state, getters){
-            return getters.loadedPosts.slice(0,3)
+            return getters.loadedPosts.slice(0,10)
         },
         loadedPost(state){  
             return(requestId) => {
@@ -205,6 +344,14 @@ export const store = new Vuex.Store({
         },
         error(state) {
             return state.error
-        }
+        },
+        userId(state){
+            return(userId) => {
+                return state.fetchUserData.find((users) => {
+                    return users.key = userId
+                })
+            }
+        },
+        
     }
 })

@@ -5,9 +5,11 @@ import PostRequests from '@/components/Requests/PostRequests'
 import PreviousClients from '@/components/User/PreviousClients'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
+import Profile from '@/components/User/Profile'
 import AreaOfService from '@/components/Requests/AreaOfService'
 import PostedRequests from '@/components/Requests/PostedRequests'
 import PostedRequest from '@/components/Requests/PostedRequest'
+import ManageRequests from '@/components/Admin/ManagePostedRequests'
 import AuthGuard from './auth-guard'
 
 
@@ -56,6 +58,18 @@ export default new Router({
       name: 'PostedRequest',
       props: true,
       component: PostedRequest
+    },
+    {
+      path: '/manage-requests',
+      name: 'ManageRequests',
+      props: true,
+      component: ManageRequests
+    },
+    {
+      path: '/profile/:id',
+      name: 'Profile',
+      props: true,
+      component: Profile
     }
   ],
   mode: 'history'

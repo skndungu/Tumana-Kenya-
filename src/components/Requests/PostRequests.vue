@@ -68,16 +68,17 @@
                  </v-layout>
                 <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
-                  <v-text-field name="imageUrl"
-                  label="Image Url"
-                  id="imageUrl"
-                  required
-                  v-model="imageUrl"
-                  ></v-text-field>
+                  <v-btn raised class="primary" 
+                  @click="onPickFile"
+                  >Upload File</v-btn>
+                  <input type="file" 
+                  style="display: none" 
+                  ref="fileInput"
+                  @change="onFilePicked">
                 </v-flex>
               </v-layout>
               <v-flex xs12 sm6 offset-sm3>
-                <img :src="imageUrl" height= "180" >
+                <img :src="imageUrl" height= "300" >
               </v-flex>
                <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
@@ -137,6 +138,7 @@ export default {
       imageUrl: '',
       date: '',
       time: '',
+      image: null
 
     }
   }, 
@@ -146,8 +148,7 @@ export default {
       this.destination !== '' && 
       this.first_name !== '' &&
       this.last_name !== '' &&
-      this.description !== '' && 
-      this.imageUrl !== ''
+      this.description !== ''
     },
     submittableDateTime() {
       const date = new Date(this.date)
@@ -177,12 +178,28 @@ export default {
                 description: this.description,
                 your_location:this.your_location,
                 destination: this.destination,
-                imageUrl: this.imageUrl,
+                image: this.image,
                 date: this.date,
-                time: this.time,
+                time: this.time
 
       }
       this.$store.dispatch('createPost', requestsData)
+    },
+    onPickFile(){
+      this.$refs.fileInput.click() 
+    },
+    onFilePicked(event){
+      const files = event.target.files
+      let filename = files[0].name
+      if(filename.lastIndexOf('.') <= 0){
+        return alert('Pleae add a valid file!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
   }
 }

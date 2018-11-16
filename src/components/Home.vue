@@ -56,6 +56,7 @@
             <v-btn large router to="/services" class="info">Services offered</v-btn>
             <v-btn large router to="/post-request" class="info">Post Request</v-btn>
             <v-btn large router to="/previous-clients/:client_id" class="info">Previous Clients</v-btn>
+            <v-btn large router to="'/profile" class="info">Go Profile and your Requests</v-btn>
             <v-btn large router to="/posted-requests" class="info">Admin</v-btn>
         </div>
     </div>
@@ -68,6 +69,7 @@
 
 <script>
 export default {
+  props:['id'],
   data() {
     return{
 
@@ -91,6 +93,15 @@ export default {
     },
     userIsAuthenticated() {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    posted(){
+      return this.$store.getters.featuredPosts
+        },
+    user() {
+      return this.$store.getters.user
+    },
+    loggedUser(){
+      return this.$store.getters.user.id
     }
   },
   methods: {
