@@ -339,19 +339,29 @@ export const store = new Vuex.Store({
         user (state) {
             return state.user
         },
+        loadUsers(state){
+            return state.setUser
+        },
+        loadUser(state){
+            return(userId) => {
+                return state.loadUsers.find((user) => {
+                    return user.id === userId
+                })
+            }
+        },
         loading(state){
             return state.loading
         },
         error(state) {
             return state.error
         },
-        userId(state){
-            return(userId) => {
-                return state.fetchUserData.find((users) => {
-                    return users.key = userId
-                })
-            }
-        },
+        // userId(state){
+        //     return(userId) => {
+        //         return state.fetchUserData.find((users) => {
+        //             return users.key = userId
+        //         })
+        //     }
+        // }
         
     }
 })

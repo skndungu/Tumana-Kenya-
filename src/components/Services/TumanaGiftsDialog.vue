@@ -1,26 +1,51 @@
 <template>
-<v-layout row>
-  <v-layout>
-  <v-flex class="services">
    <v-dialog persistent v-model="showModal"
    width="600" >
-    <v-btn accent slot="activator" class="info"
-        id="service1"
+     <v-card accent slot="activator"
+       width="400"
        >
-       Tumana for Gifts
-      </v-btn>
+        <v-card-title class="info--text"><strong>Tumana Gifts</strong></v-card-title>
+         <v-divider></v-divider>
+          <v-card-text> 
+              <img src="@/assets/img/Gifts/Gift1.jpeg" 
+              width="370"
+              height="250"
+               >
+
+              Are you a firm and you would like to carry out a 
+                                research that involves your Gift size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you... </v-card-text>
+       <v-card-actions>
+        <v-spacer></v-spacer> 
+          <v-btn flat class="green--text darken-1">get service</v-btn> 
+        </v-card-actions>
+      </v-card>
       <v-card>
             <v-container>
                 <v-layout row wrap>
                     <v-flex xs12>
-                        <v-card-title> Tumana for Gifts</v-card-title>
+                        <v-card-title class="info--text">Tumana Gifts</v-card-title>
                     </v-flex>
                     <v-divider></v-divider>
                     <v-layout row wrap>
                         <v-flex xs12>
                             <v-card-text>
-                             Tumana for a Christmas gift for you loved ones
-                             Buy them a shoe, dresses, ties, belt, a car, a phone, iPhone, a time piece /watches just tumana
+                                 <v-carousel class="carousel-image">
+                                    <v-carousel-item
+                                    v-for="(item,i) in items"
+                                        :key="i"
+                                        :src="item.src"
+                                        reverse-transition="fade"
+                                        transition="fade" 
+                                        @click="showModal=false"
+                                        ></v-carousel-item>
+                                </v-carousel>
+                                Are you a firm and you would like to carry out a 
+                                research that involves your Gift size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you 
+                                want to introduce to the marker... Just tumana to get a service
                             </v-card-text>
                         </v-flex>
                     </v-layout>
@@ -38,10 +63,8 @@
             </v-container>
         </v-card>
     </v-dialog>
-  </v-flex>
-  </v-layout>
-</v-layout>
 </template>
+
 
 <style scoped >
  
@@ -51,24 +74,34 @@
 export default {
   data(){
     return{
-
-      showModal: false
-    }
-  },
-  methods: {
+      showModal: false,
+        items: [
+                {
+                  
+                   src: require('@/assets/img/Gifts/Gift1.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Gifts/Gift2.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Gifts/Gift3.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Gifts/Gift4.jpeg')
+                }
+                ]
+        }
+},
+  methods:{
     
   }
 }
 </script>
 
 <style scoped>
-#service1{
-    /* display: flex;
-    flex-flow: row;
-    justify-items: center; */
-}
-.v-btn__content{
-  
+.carousel-image{
+    width: 500px;
 }
 </style>
+
 

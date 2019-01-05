@@ -12,10 +12,11 @@
             <v-container>
               <form @submit.prevent="onSignIn">
                 <v-layout row>
+                  <v-icon>email</v-icon> 
                   <v-flex xs12>
                     <v-text-field
                     name="email"
-                    label="Mail"
+                    label="Email"
                     id="email"
                     v-model= "email"
                     type="email"
@@ -24,6 +25,7 @@
                   </v-flex>
                 </v-layout>
                 <v-layout row>
+                  <v-icon>lock</v-icon> 
                   <v-flex xs12>
                     <v-text-field
                     name="password"
@@ -37,9 +39,13 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn type="submit" :disabled="loading" :loading="loading">Sign in
-                        <span slot="loader" class="custom-loader">
-                          <v-icon light>cached</v-icon>
+                    <v-btn type="submit"
+                     :disabled="loading" 
+                     :loading="loading"
+                      class="logincolor"
+                      >Sign in
+                      <span slot="loader" class="custom-loader">
+                        <v-icon light>cached</v-icon>
                         </span>
                     </v-btn>
                   </v-flex>
@@ -65,30 +71,41 @@ export default {
     user() {
       return this.$store.getters.user
     },
+     loadedUsers(){
+      return this.$store.getters.loadUsers
+    },
     error () {
       return this.$store.getters.error
     },
     loading(){
       return this.$store.getters.loading
-    }
+    },
+   posted(){
+      return this.$store.getters.featuredPosts
+        },
   },
   watch:{
       user(value) {
+        console.log(value.id)
         if(value !== null && value !== undefined) {
-          this.$router.push('/')
+          this.$router.push('/profile/' + value.id)
         }
       }
     },
   methods: {
     onSignIn(){
-      //Vuex
+      //Vuexid
       // console.log({email: this.email, password: this.password, confirmPassword: this.confirmPassword})
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+      this.$store.dispatch('fetchUserData')
     },
     onDismissed(){
        console.log('Dismissed Alert!')
        this.$store.dispatch('clearError')
-     }
+     },
+    onLogin(){
+      this.$store.dispatch('fetchUserData')
+    }
   }
 }
 </script>

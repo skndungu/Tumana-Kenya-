@@ -1,24 +1,46 @@
 <template>
-<v-layout row>
-  <v-layout>
-  <v-flex class="services">
    <v-dialog persistent v-model="showModal"
    width="600" >
-    <v-btn accent slot="activator" class="info"
-        id="service1"
+     <v-card accent slot="activator"
+       width="400"
        >
-       Have Market Research Done
-      </v-btn>
+        <v-card-title class="info--text"><strong>Have Market Research/ Survey Done</strong></v-card-title>
+         <v-divider></v-divider>
+          <v-card-text> 
+              <img src="@/assets/img/Market/Market1.jpeg" 
+              width="370"
+              height="250"
+               >
+
+              Are you a firm and you would like to carry out a 
+                                research that involves your market size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you... </v-card-text>
+       <v-card-actions>
+        <v-spacer></v-spacer> 
+          <v-btn flat class="green--text darken-1">get service</v-btn> 
+        </v-card-actions>
+      </v-card>
       <v-card>
             <v-container>
                 <v-layout row wrap>
                     <v-flex xs12>
-                        <v-card-title> Have Market Research Done</v-card-title>
+                        <v-card-title class="info--text"> Have Market Research Done</v-card-title>
                     </v-flex>
                     <v-divider></v-divider>
                     <v-layout row wrap>
                         <v-flex xs12>
                             <v-card-text>
+                                 <v-carousel class="carousel-image">
+                                    <v-carousel-item
+                                    v-for="(item,i) in items"
+                                        :key="i"
+                                        :src="item.src"
+                                        reverse-transition="fade"
+                                        transition="fade" 
+                                        @click="showModal=false"
+                                        ></v-carousel-item>
+                                </v-carousel>
                                 Are you a firm and you would like to carry out a 
                                 research that involves your market size a
                                 nd share, your product ranking among competing brands or a 
@@ -41,10 +63,8 @@
             </v-container>
         </v-card>
     </v-dialog>
-  </v-flex>
-  </v-layout>
-</v-layout>
 </template>
+
 
 <style scoped >
  
@@ -54,24 +74,37 @@
 export default {
   data(){
     return{
-
-      showModal: false
-    }
-  },
-  methods: {
+      showModal: false,
+        items: [
+                {
+                  
+                   src: require('@/assets/img/Market/Market1.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Market/Market2.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Market/Market3.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Market/Market4.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Market/Market5.jpeg')
+                }
+                ]
+        }
+},
+  methods:{
     
   }
 }
 </script>
 
 <style scoped>
-#service1{
-    /* display: flex;
-    flex-flow: row;
-    justify-items: center; */
-}
-.v-btn__content{
-  
+.carousel-image{
+    width: 500px;
 }
 </style>
+
 

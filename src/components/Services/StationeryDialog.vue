@@ -1,28 +1,51 @@
 <template>
-<v-layout row>
-  <v-layout>
-  <v-flex class="services">
    <v-dialog persistent v-model="showModal"
    width="600" >
-    <v-btn accent slot="activator" class="info"
-        id="service1"
+     <v-card accent slot="activator"
+       width="400"
        >
-      Get Stationery Items
-      </v-btn>
+        <v-card-title class="info--text"><strong>Stationery Items</strong></v-card-title>
+         <v-divider></v-divider>
+          <v-card-text> 
+              <img src="@/assets/img/Stationary/stationary1.jpeg" 
+              width="370"
+               >
+
+              Are you a firm and you would like to carry out a 
+                                research that involves your market size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you... </v-card-text>
+       <v-card-actions>
+        <v-spacer></v-spacer> 
+          <v-btn flat class="green--text darken-1">get service</v-btn> 
+        </v-card-actions>
+      </v-card>
       <v-card>
             <v-container>
                 <v-layout row wrap>
                     <v-flex xs12>
-                        <v-card-title> Get Stationery Itemsd</v-card-title>
+                        <v-card-title class="info--text"> Stationery Items</v-card-title>
                     </v-flex>
                     <v-divider></v-divider>
                     <v-layout row wrap>
                         <v-flex xs12>
                             <v-card-text>
-                    Get stationery for your office, home or for stock in your business <br>
-                    Get tonners for your printers, Hp, cannon, epson, ricoh and many other printers <br>
-                    Get delivery for all your shopping on these item(stationery) 
-                         </v-card-text>
+                                 <v-carousel class="carousel-image">
+                                    <v-carousel-item
+                                    v-for="(item,i) in items"
+                                        :key="i"
+                                        :src="item.src"
+                                        reverse-transition="fade"
+                                        transition="fade" 
+                                        @click="showModal=false"
+                                        ></v-carousel-item>
+                                </v-carousel>
+                                Are you a firm and you would like to carry out a 
+                                research that involves your market size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you 
+                                want to introduce to the marker... Just tumana to get a service
+                            </v-card-text>
                         </v-flex>
                     </v-layout>
                 </v-layout>
@@ -39,9 +62,6 @@
             </v-container>
         </v-card>
     </v-dialog>
-  </v-flex>
-  </v-layout>
-</v-layout>
 </template>
 
 <style scoped >
@@ -53,7 +73,25 @@ export default {
   data(){
     return{
 
-      showModal: false
+      showModal: false,
+       items: [
+                {
+                  
+                   src: require('@/assets/img/Stationary/stationary1.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Stationary/stationary2.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Stationary/stationary3.jpg')
+                },
+                {
+                    src: require('@/assets/img/Stationary/stationary4.jpg')
+                },
+                {
+                    src: require('@/assets/img/Stationary/stationary5.jpeg')
+                }
+                ]
     }
   },
   methods: {

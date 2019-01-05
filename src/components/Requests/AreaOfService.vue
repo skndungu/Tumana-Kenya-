@@ -1,29 +1,25 @@
 <template>
-<v-layout row>
-  <v-layout>
-  <v-flex xs12 sm6 offset-sm3 >
-    <app-tender-dialog></app-tender-dialog>
-    <app-helb-dialog></app-helb-dialog>
-    <app-kra-dialog></app-kra-dialog>
-    <app-garage-dialog></app-garage-dialog>
-    <app-meeting-dialog></app-meeting-dialog>
-    <app-market-dialog></app-market-dialog>
-    <app-dawa-dialog></app-dawa-dialog>
-    <app-branding-dialog></app-branding-dialog>
-    <app-gifts-dialog></app-gifts-dialog>
-    <app-eulogy-dialog></app-eulogy-dialog>
-    <app-delivery-dialog></app-delivery-dialog>
-    <app-stationery-dialog></app-stationery-dialog>
-    <app-application-dialog></app-application-dialog>
-  </v-flex>
-  </v-layout>
-</v-layout>
+<div><h2 class="primary--text">Tumana Kenya Services
+  <v-spacer></v-spacer>
+  <v-btn flat class="back" router to="/"><v-icon>dashboard</v-icon></v-btn>
+  
+</h2>
+  <div class="card-services">
+    <app-tender-dialog id="services"></app-tender-dialog><br>
+    <app-delivery-dialog id="services"></app-delivery-dialog><br>
+    <app-stationery-dialog id="services"></app-stationery-dialog><br>
+    <app-helb-dialog id="services"></app-helb-dialog><br>
+    <app-kra-dialog id="services"></app-kra-dialog><br> 
+    <app-garage-dialog id="services"></app-garage-dialog><br>
+    <app-meeting-dialog id="services"></app-meeting-dialog><br>
+    <app-market-dialog id="services"></app-market-dialog><br>
+    <app-dawa-dialog id="services"></app-dawa-dialog><br>
+    <app-branding-dialog id="services"></app-branding-dialog><br>
+    <app-gifts-dialog id="services"></app-gifts-dialog><br> 
+    <app-application-dialog id="services"></app-application-dialog><br> 
+  </div>
+  </div>
 </template>
-
-<style scoped >
- 
-</style>
-
 <script>
 export default {
   data(){
@@ -68,13 +64,57 @@ export default {
 </script>
 
 <style scoped>
-#service1{
-    /* display: flex;
-    flex-flow: row;
-    justify-items: center; */
+.card-services{
+  display: flex;
+  flex-flow: row wrap;
 }
-.v-btn__content{
-  
+.card-services > #services {
+  flex:1 1 auto;
+  /* margin-bottom: 8px; */
+  padding: 25px 0px 0px 25px;
 }
+h2{
+  padding: 10px;
+  text-align: center;
+  font-size: 24pt;
+  font-weight: normal;
+  /* font-family: Gotham Medium; */
+}
+.back{
+  position: fixed;
+  top: 10px;
+  right: 2px;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+}
+@media(max-width: 1023px){
+  .card-services{
+   display: flex;
+  flex-flow: column;
+  /*justify-content: center;*/
+    align-items: center; 
+}
+.card-services > #services {
+  flex:1 1 auto;
+  /* margin-bottom: 8px; */
+  padding: 0px 0px 0px 0px;
+}
+}
+
+
+@media(max-width: 768px){
+.back{
+  position: fixed;
+  top: 2px;
+  right: 0px;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+  padding-bottom: 8px;
+}
+}
+
+
 </style>
 

@@ -138,6 +138,7 @@ export default {
       imageUrl: '',
       date: '',
       time: '',
+      delivered: '',
       image: null
 
     }

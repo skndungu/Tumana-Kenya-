@@ -1,30 +1,52 @@
 <template>
-<v-layout row>
-  <v-layout>
-  <v-flex class="services">
-    <h2 class="primary--text">Tumana Kenya Services</h2>
    <v-dialog persistent v-model="showModal"
    width="600" >
-    <v-btn accent slot="activator" class="info"
-        id="service1"
+     <v-card accent slot="activator"
+       width="400"
        >
-       Get Tender Quotations
-      </v-btn>
+        <v-card-title class="info--text"><strong>Tenders</strong></v-card-title>
+         <v-divider></v-divider>
+          <v-card-text> 
+              <img src="@/assets/img/Tenders/tender2.jpg" 
+              width="370"
+               >
+
+              Are you a firm and you would like to carry out a 
+              research that involves your market size a
+              nd share, your product ranking among competing brands or a 
+              new product you... </v-card-text>
+       <v-card-actions>
+        <v-spacer></v-spacer> 
+          <v-btn flat class="green--text darken-1">get service</v-btn> 
+        </v-card-actions>
+      </v-card>
       <v-card>
             <v-container>
                 <v-layout row wrap>
                     <v-flex xs12>
-                        <v-card-title> Get Tender Quotations</v-card-title>
+                        <v-card-title class="info--text">Get Tender Quotations</v-card-title>
                     </v-flex>
                     <v-divider></v-divider>
                     <v-layout row wrap>
                         <v-flex xs12>
                             <v-card-text>
-                              Get quotations done for you Site visit attendance <br>
-                              Get bill of quantity BQ done for you <br>
-                              Get delivery of goods done for you <br>
-                              Get market research on an item <br>
-                              Get representation in a meeting for suppliers and get a report at the end of the meeting
+                                 <v-carousel class="carousel-image">
+                                    <v-carousel-item
+                                    v-for="(item,i) in items"
+                                        :key="i"
+                                        :src="item.src"
+                                        reverse-transition="fade"
+                                        transition="fade" 
+                                        @click="showModal=false"
+                                        ></v-carousel-item>
+                                </v-carousel>
+                                <p style="color: orange">
+                                Are you a firm and you would like to carry out a 
+                                research that involves your market size a
+                                nd share, your product ranking among competing brands or a 
+                                new product you 
+                                want to introduce to the marker... Just tumana to get a service
+                                </p>
                             </v-card-text>
                         </v-flex>
                     </v-layout>
@@ -42,9 +64,6 @@
             </v-container>
         </v-card>
     </v-dialog>
-  </v-flex>
-  </v-layout>
-</v-layout>
 </template>
 
 <style scoped >
@@ -56,7 +75,31 @@ export default {
   data(){
     return{
 
-      showModal: false
+      showModal: false,
+       items: [
+                {
+                  
+                   src: require('@/assets/img/Tenders/tender2.jpg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender3.jpg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender4.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender5.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender6.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender7.jpeg')
+                },
+                {
+                    src: require('@/assets/img/Tenders/tender8.jpeg')
+                }
+                ]
     }
   },
   methods: {

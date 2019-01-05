@@ -56,11 +56,14 @@
             <v-btn large router to="/services" class="info">Services offered</v-btn>
             <v-btn large router to="/post-request" class="info">Post Request</v-btn>
             <v-btn large router to="/previous-clients/:client_id" class="info">Previous Clients</v-btn>
-            <v-btn large router to="'/profile" class="info">Go Profile and your Requests</v-btn>
             <v-btn large router to="/posted-requests" class="info">Admin</v-btn>
         </div>
+          <div large router :to="'/profile/' + post.creatorId" 
+            v-for="post in posted" 
+                    :src="post.imageUrl"
+                    :key="post.id"
+            ></div>
     </div>
-        
     </v-img> 
     </v-flex>
    </v-layout>
@@ -69,10 +72,9 @@
 
 <script>
 export default {
-  props:['id'],
   data() {
     return{
-
+      email: ''
     }
   },
   computed: {
@@ -102,11 +104,17 @@ export default {
     },
     loggedUser(){
       return this.$store.getters.user.id
+    },
+    profile(){
+      return this.$store.getters.user.email
     }
   },
   methods: {
     onLogout(){
       this.$store.dispatch('logout')
+    },
+    onLogin(){
+      this.$store.dispatch('fetchUserData')
     }
   }
 }

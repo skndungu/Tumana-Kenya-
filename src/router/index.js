@@ -44,6 +44,12 @@ export default new Router({
       component: Signin
     },
     {
+      path: '/profile/:id',
+      name: 'Profile',
+      props: true,
+      component: Profile
+    },
+    {
       path: '/services',
       name: 'AreaOfService',
       component: AreaOfService
@@ -64,12 +70,6 @@ export default new Router({
       name: 'ManageRequests',
       props: true,
       component: ManageRequests
-    },
-    {
-      path: '/profile/:id',
-      name: 'Profile',
-      props: true,
-      component: Profile
     }
   ],
   mode: 'history'

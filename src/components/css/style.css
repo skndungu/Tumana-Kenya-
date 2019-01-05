@@ -121,10 +121,11 @@
 
 #service-item{
     margin-top: 10px;
-    color: #ffff;
+    color: #ffffff;
     padding: 10px;
     margin-right: 10px;
     list-style: none;
+    font-weight: normal;
 }
 
 
