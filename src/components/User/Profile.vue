@@ -1,5 +1,5 @@
 <template>
-<v-layout>
+<v-layout row>
     <v-flex xs-12> 
      <v-img  src="https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
        <h1 id="logo">Tumana <span id="sublogo"> | Kenya</span>
@@ -31,13 +31,15 @@
              </div>
         <v-layout row wrap>
             <v-flex 
+            xs-12
             v-for="post in posted" 
             :src="post.imageUrl"
             :key="post.id" class="mb-3"
             >
             <!-- <v-btn @click="showRequests">Click</v-btn> -->
-            <div class="card-display">
+            <div >
             <v-card accent slot="activator"
+                 class="card-display"
                  width="400" v-if="post.creatorId == id"
                  >
               
@@ -178,12 +180,6 @@ export default {
      color: orange;
      font-weight: bold;
  }
- .card-display{
-     display: flex;
-     flex-flow: row wrap;
-     justify-content: center;
-     align-items: center;
- }
 
 #logo{
     font-size: 26pt;
@@ -213,20 +209,28 @@ export default {
     right: 100px;
     color: #ffff;
 }
-.profile{
+
+.card-display{
+    position: relative;
+    /* left: 10px; */
+}
+
+
+
+/* .profile{
     position: fixed;
     top: 10px;
     right: 35px;
     cursor: pointer;
 
-}
-.profile_name{
+} */
+/* .profile_name{
     position: fixed;
     top: 20px;
     right: 5px;
     cursor: pointer;
 
-}
+} */
 
 @media(max-width: 768px){
       .service-items{
